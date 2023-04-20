@@ -10,7 +10,7 @@
 </head>
 <body>
     <nav>
-        <a href="index.html">Home</a> <br>
+        <a href="index.php">Home</a> <br>
         <a href="playlists.html">Playlists</a> <br>
         <a href="youtube-dl.html">Music Downloader</a> <br>
         <a href="tag-editor.html">Music Editor</a>
@@ -22,7 +22,7 @@
         // Listagem dinâmica dos arquivos.
         // Caso não dê para listar tudo dinamicamente lendo as metatags, alterar para formato JSON e renderizar com JS.
         while($musicFile = $dir->read()){
-            if($musicFile != '..' && $musicFile != '.'){
+            if($musicFile != '..' && $musicFile != '.') {
                 echo "
                 <figure>
                     <figcaption>$musicFile</figcaption>
