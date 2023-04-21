@@ -21,6 +21,10 @@
 
 [ ] Listagem com filtro e pesquisa utilizando JSON.
 
+[ ] No modo responsivo, trocar textos do nav menu para ícones e manter esses ícones full time na versão apk.
+
+[ ] Também para a versão app remover as informações da música na listagem (seja na biblioteca ou na página de playlists, apenas manter o card com thumbnail, play e add playlist).
+
 = = = = = = =
 
 Listagem (tabela)
