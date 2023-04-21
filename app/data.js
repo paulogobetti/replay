@@ -20,18 +20,36 @@ let musicData = [
 ]
 console.log(musicData)
 
-let playlists = {
-    "Post Punk": {
-        "playlist_id": 1,
-        "tracks_id": [1]
+let playlists = [
+    {
+        playlist_id: 1,
+        playlist_name: "Post Punk",
+        tracks: [1]
     },
-    "Dream Pop": {
-        "playlist_id": 9,
-        "tracks_id": [22, 1]
+    {
+        playlist_id: 9,
+        playlist_name: "Dream Pop",
+        tracks: [22, 1]
     },
-    "Pop Rock": {
-        "playlist_id": 56,
-        "tracks_id": [22]
+    {
+        playlist_id: 56,
+        playlist_name: "Pop Rock",
+        tracks: [22]
     }
-}
+]
+
+// let playlists = {
+//     "Post Punk": {
+//         "playlist_id": 1,
+//         "tracks_id": [1]
+//     },
+//     "Dream Pop": {
+//         "playlist_id": 9,
+//         "tracks_id": [22, 1]
+//     },
+//     "Pop Rock": {
+//         "playlist_id": 56,
+//         "tracks_id": [22]
+//     }
+// }
 console.log(playlists)

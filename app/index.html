@@ -21,10 +21,8 @@
             </div>
             <div class="playlists-side-bar">
                 <h4 style="padding: 1em;">PLAYLISTS</h4>
-                <a href="index.html"><p class="playlists-side-bar-item">Playlist 1</p></a> <br>
-                <a href="index.html"><p class="playlists-side-bar-item">Playlist 2</p></a> <br>
-                <a href="index.html"><p class="playlists-side-bar-item">Playlist 3</p></a> <br>
-                <a href="index.html"><p class="playlists-side-bar-item">Playlist 4</p></a> <br>
+                <div id="playlists" >
+                </div>
             </div>
         </div>
         <div id="library">
@@ -91,9 +89,25 @@
             musicItem.append(duration)
             musicItem.append(release)
             library.append(musicItem)
-        });
+        })
     }
     listLibrary( )
+
+    const listPlaylists = ( ) => {
+        playlists.forEach(i => {
+            let playlists = document.getElementById('playlists')
+
+            let playlistLink = document.createElement('a')
+            let playlistTitle = document.createElement('h3')
+
+            playlistLink.href = '#'
+            playlistTitle.innerHTML = i.playlist_name
+
+            playlistLink.append(playlistTitle)
+            playlists.append(playlistLink)
+        })
+    }
+    listPlaylists()
 </script>
 </body>
 </html>
