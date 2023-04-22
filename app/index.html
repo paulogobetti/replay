@@ -19,8 +19,8 @@
                 <a href="youtube-dl.html"><p class="nav-menu-item">Downloader</p></a> <br>
                 <a href="tag-editor.html"><p class="nav-menu-item">Music Editor</p></a>
             </div>
-            <div class="playlists-side-bar">
-                <h4 style="padding: 1em;">PLAYLISTS</h4>
+            <div class="playlists-container">
+                <h4>PLAYLISTS</h4>
                 <div id="playlists" >
                 </div>
             </div>
@@ -33,9 +33,9 @@
         <div class="player-controls">
             <div class="title-display"><h4>Artista - Nome da Música</h4></div>
             <div class="player-buttons">
-                <a href="#"><img src="img/button.svg" alt="" class="generic-btn"></a>
-                <a href="#"><img src="img/button.svg" alt="" class="generic-btn"></a>
-                <a href="#"><img src="img/button.svg" alt="" class="generic-btn"></a>
+                <a href="#"><img src="img/back-button.svg" alt="" class="generic-btn"></a>
+                <a href="#"><img src="img/play-button.svg" alt="" class="play-button"></a>
+                <a href="#"><img src="img/foward-button.svg" alt="" class="generic-btn"></a>
             </div>
             <div class="progress-bar">
                 <div class="progress-update" style="width: 93%;"></div>
@@ -51,11 +51,11 @@
             let coverUrl = i.thumbnail
 
             let playButton = document.createElement('img')
-            playButton.src = 'img/button.svg'
+            playButton.src = 'img/play-list-button-3.svg'
             playButton.classList.add('generic-btn')
 
             let addToPlaylistButton = document.createElement('img')
-            addToPlaylistButton.src = 'img/button.svg'
+            addToPlaylistButton.src = 'img/add-to-playlist-button-2.svg'
             addToPlaylistButton.classList.add('generic-btn')
 
             let musicTitle = document.createElement('h3')
@@ -108,6 +108,7 @@
         })
     }
     listPlaylists()
+
 </script>
 </body>
 </html>
