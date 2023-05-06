@@ -5,8 +5,8 @@ let musicData = [
         artist: 'Hackerson',
         album: 'Hello World',
         realease: 2008,
-        src: 'media/Hackerson - Hello World [Hello World - 2008].mp3',
-        thumbnail: 'media/img/Hackerson - Hello World [Hello World - 2008].jpg'
+        src: 'app/media/Hackerson - Hello World [Hello World - 2008].mp3',
+        thumbnail: 'app/media/Hackerson - Hello World [Hello World - 2008].jpg'
     },
     {
         track_id: 22,
@@ -14,11 +14,11 @@ let musicData = [
         artist: 'Asia',
         album: 'Good Bye',
         realease: 2015,
-        src: 'media/Asia - A Horse With Name [Good Bye - 2015].mp3',
-        thumbnail: 'media/img/Asia - A Horse With Name [Good Bye - 2015].png'
+        src: 'app/media/Asia - A Horse With Name [Good Bye - 2015].mp3',
+        thumbnail: 'app/media/Asia - A Horse With Name [Good Bye - 2015].jpg'
     }
 ]
-console.log(musicData)
+console.log(JSON.stringify(musicData, '/t', 2))
 
 let playlists = [
     {
@@ -37,19 +37,4 @@ let playlists = [
         tracks: [22]
     }
 ]
-
-// let playlists = {
-//     "Post Punk": {
-//         "playlist_id": 1,
-//         "tracks_id": [1]
-//     },
-//     "Dream Pop": {
-//         "playlist_id": 9,
-//         "tracks_id": [22, 1]
-//     },
-//     "Pop Rock": {
-//         "playlist_id": 56,
-//         "tracks_id": [22]
-//     }
-// }
-console.log(playlists)
+console.log(JSON.stringify(playlists, '/t', 2))

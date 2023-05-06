@@ -2,6 +2,7 @@ app/components
 app/media
 app/test.html
 components
+src/.cache
 src/includes
 src/debug.php
 src/backup.php

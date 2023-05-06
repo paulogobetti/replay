@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RePlay</title>
-    <link rel="stylesheet" href="style/layout.css">
-    <script src="data.js"></script>
+    <link rel="stylesheet" href="app/style/layout.css">
+    <script src="app/data.js"></script>
+
 </head>
+
 <body>
+
 <div id="body">
     <div class="container">
         <div id="global-side-bar">
-            <img src="img/replay-logo.svg" alt="" class="logo">
-            <div class="nav-menu">
-                <a href="index.html"><p class="nav-menu-item nav-menu-item-selected">Home</p></a> <br>
-                <a href="playlists.html"><p class="nav-menu-item">Playlists</p></a> <br>
-                <a href="youtube-dl.html"><p class="nav-menu-item">Downloader</p></a> <br>
-                <a href="tag-editor.html"><p class="nav-menu-item">Music Editor</p></a>
+            <img src="app/img/replay-logo.svg" alt="" class="logo">
+            <div class="nav-menu">  <!-- NAV MENU -->
+                <a href="/replay"><p class="nav-menu-item nav-menu-item-selected">Home</p></a> <br>
+                <a href="app/playlists.html"><p class="nav-menu-item">Playlists</p></a> <br>
+                <a href="app/youtube-dl.html"><p class="nav-menu-item">Downloader</p></a> <br>
+                <a href="app/tag-editor.html"><p class="nav-menu-item">Music Editor</p></a>
             </div>
             <div class="playlists-container">
                 <h4>PLAYLISTS</h4>
@@ -33,9 +37,9 @@
         <div class="player-controls">
             <div class="title-display"><h4>Artista - Nome da Música</h4></div>
             <div class="player-buttons">
-                <a href="#"><img src="img/back-button.svg" alt="" class="generic-btn"></a>
-                <a href="#"><img src="img/play-button.svg" alt="" class="play-button"></a>
-                <a href="#"><img src="img/foward-button.svg" alt="" class="generic-btn"></a>
+                <a href="#"><img src="app/img/back-button.svg" alt="" class="generic-btn"></a>
+                <a href="#"><img src="app/img/play-button.svg" alt="" class="play-button"></a>
+                <a href="#"><img src="app/img/foward-button.svg" alt="" class="generic-btn"></a>
             </div>
             <div class="progress-bar">
                 <div class="progress-update" style="width: 93%;"></div>
@@ -44,71 +48,7 @@
     </div>
 </div>
 
-<script>
-    const listLibrary = (library) => {
-        musicData.forEach(i => {
-            let library = document.getElementById('library')
-            let coverUrl = i.thumbnail
+<script src="app/scripts.js"></script>
 
-            let playButton = document.createElement('img')
-            playButton.src = 'img/play-list-button-3.svg'
-            playButton.classList.add('generic-btn')
-
-            let addToPlaylistButton = document.createElement('img')
-            addToPlaylistButton.src = 'img/add-to-playlist-button-2.svg'
-            addToPlaylistButton.classList.add('generic-btn')
-
-            let musicTitle = document.createElement('h3')
-            musicTitle.innerHTML = i.name
-
-            let artist = document.createElement('h3')
-            artist.innerHTML = i.artist
-
-            let album = document.createElement('h3')
-            album.innerHTML = i.album
-
-            let duration = document.createElement('h3')
-            duration.innerHTML = '00:00'
-
-            let release = document.createElement('h3')
-            release.innerHTML = i.realease
-
-            let musicItem = document.createElement('div')
-            musicItem.classList.add('music-card')
-
-            let cover = document.createElement('img')
-            cover.src = coverUrl
-            cover.classList.add('music-thumbnail')
-
-            musicItem.append(cover)
-            musicItem.append(playButton)
-            musicItem.append(addToPlaylistButton)
-            musicItem.append(musicTitle)
-            musicItem.append(artist)
-            musicItem.append(album)
-            musicItem.append(duration)
-            musicItem.append(release)
-            library.append(musicItem)
-        })
-    }
-    listLibrary( )
-
-    const listPlaylists = ( ) => {
-        playlists.forEach(i => {
-            let playlists = document.getElementById('playlists')
-
-            let playlistLink = document.createElement('a')
-            let playlistTitle = document.createElement('h3')
-
-            playlistLink.href = '#'
-            playlistTitle.innerHTML = i.playlist_name
-
-            playlistLink.append(playlistTitle)
-            playlists.append(playlistLink)
-        })
-    }
-    listPlaylists()
-
-</script>
 </body>
 </html>
