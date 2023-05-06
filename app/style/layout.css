@@ -1,24 +1,24 @@
-* {margin: 0; padding: 0; box-sizing: border-box; transition: 1s; font-family: sans-serif}
+* {margin: 0; padding: 0; box-sizing: border-box; transition: .2s; font-family: sans-serif}
 
 .container {width: 100%; height: 90vh; display: flex; }
 #global-side-bar {background: #202128; width: 20%; padding: 2%; overflow-y: auto; overflow-x: hidden;}
 #library {background: #1a1b20; width: 80%; padding: 50px;}
 
 .logo {max-width: 50px; width: 100%;}
-.nav-menu {background: 202128; padding: 10px;}
+.nav-menu {background: 202128; padding: 30px 0;}
 .nav-menu a {text-decoration: none;}
-.nav-menu-item {padding: 1em; font-weight: 900;border-radius: 3px; color: #fff;}
-.nav-menu-item:hover {background: #fff; color: #2f3137;}
-.nav-menu-item-selected {color: #fff;}
+.nav-menu-item {font-weight: 900; border-radius: 3px; color: #fff;}
+.nav-menu-item:hover {color: #6f2dff;}
+.nav-menu-item-selected {color: #6f2dff;}
 
 .playlists-container {background: #1d1b1b; color: #fff; padding: 30px; border-radius: 8px;}
 .playlists-container h4 {font-size: 20px;}
 .playlists-container a {font-size: 15px; text-decoration: none; color: #fff; padding: 10px;}
-.playlists-container a :hover {color: black;}
+.playlists-container a :hover {color: #6f2dff;}
 /* .playlists-side-bar-item {} */
 
 .music-card {background: #202128; width: 100%; display: flex; border-bottom: solid .1px #2f3137; gap: 5%; align-items: center; font-size: 12px; color: #fff;}
-.music-thumbnail {width: 88px;}
+.music-thumbnail {width: 88px; height: 88px; object-fit: cover;}
 
 .player {background: #1a1b20; width: 100%; height: 10vh; position: absolute; display: flex; text-align: center; align-items: center;}
 .player-controls {width: 100%;}
@@ -28,7 +28,7 @@
 
 .player-buttons {width: 100%;}
 .generic-btn {width: 30px; margin: 0; padding: 0; margin-top: 6px; cursor: pointer;}
-.generic-btn:hover {background: yellow;}
+.generic-btn:hover {background: #fff;}
 .play-button {width: 60px; margin: 0; padding: 0; margin-top: 6px; cursor: pointer; padding: 0 10px;}
 
 .progress-bar {width: 100%; max-width: 920px; height: 9px; background: #3b4059; border-radius: 8px; position: relative; display: inline-block;}

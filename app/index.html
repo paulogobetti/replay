@@ -6,17 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RePlay</title>
+    <!-- FAVICON -->
+    <link rel="icon" type="image/x-icon" href="app/img/replay-logo-favicon.svg">
     <link rel="stylesheet" href="app/style/layout.css">
     <script src="app/data.js"></script>
 
 </head>
 
 <body>
-
 <div id="body">
+
     <div class="container">
-        <div id="global-side-bar">
-            <img src="app/img/replay-logo.svg" alt="" class="logo">
+        <div id="global-side-bar">     <!-- SIDE BAR -->
+            <img src="app/img/replay-logo-white.svg" alt="" class="logo">
             <div class="nav-menu">  <!-- NAV MENU -->
                 <a href="/replay"><p class="nav-menu-item nav-menu-item-selected">Home</p></a> <br>
                 <a href="app/playlists.html"><p class="nav-menu-item">Playlists</p></a> <br>
@@ -24,16 +26,17 @@
                 <a href="app/tag-editor.html"><p class="nav-menu-item">Music Editor</p></a>
             </div>
             <div class="playlists-container">
-                <h4>PLAYLISTS</h4>
+                <h4>P L A Y L I S T S</h4>
                 <div id="playlists" >
                 </div>
             </div>
         </div>
-        <div id="library">
+
+        <div id="library">     <!-- CONTENT -->
         </div>
     </div>
 
-    <div class="player">
+    <div class="player">    <!-- PLAYER -->
         <div class="player-controls">
             <div class="title-display"><h4>Artista - Nome da Música</h4></div>
             <div class="player-buttons">
@@ -46,6 +49,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <script src="app/scripts.js"></script>

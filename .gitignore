@@ -6,3 +6,5 @@ src/.cache
 src/includes
 src/debug.php
 src/backup.php
+src/teste.php
+
