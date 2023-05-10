@@ -2,7 +2,7 @@
 
 .container {width: 100%; height: 90vh; display: flex; }
 #global-side-bar {background: #202128; width: 20%; padding: 2%; overflow-y: auto; overflow-x: hidden;}
-#library {background: #1a1b20; width: 80%; padding: 50px;}
+#content-display {background: #1a1b20; width: 80%; padding: 50px;}
 
 .logo {max-width: 50px; width: 100%;}
 .nav-menu {background: 202128; padding: 30px 0;}
@@ -35,5 +35,5 @@
 .progress-update {position: absolute; left: 0; top: 0; width: 0; height: 9px; border-radius: 8px; background: #6f2dff;}
 
 @media screen and (max-width: 920px) {
-    #library {background: #000;}
+    #content-display {background: #000;}
 }
