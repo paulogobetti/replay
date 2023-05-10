@@ -1,36 +1,80 @@
-[ ] PWA (responsivo <= 512px de largura - janela pequena estilo Winamp) // Verificar se é possível só com JS.
+<p align="center">
+<img width="150" src="app/img/replay-logo-favicon.svg"></p>
+<h1 align="center">RePlay</h1>
 
-[ ] Equalizer.
+><div align="center">⚠️
+><div align="center">Attention: This project is under development.
+<br>
 
-[ ] API para criação de temas.
+Web Music Player with GUI for youtube-dl command-line.
 
-[ ] Integração com Last.fm.
+<br>
 
-[ ] Spectogram.
+- DESCRIPTION
+- REQUIREMENTS
+- HOW TO USE
+- DEV
+- COPYRIGHT
+- SCREENSHOTS
 
-[ ] Contagem regressiva de tempo em segundos.
+<br>
+<hr>
 
-[ ] Controles: Play, Pause, Avançar, Voltar, Volume, Timeline (da música tocando).
+<h4>D E S C R I P T I O N</h4>
+**Replay** is a Web App created to manage your personal music library, integrated with the youtube-dl command-line app. It is released to the public domain, which means you can modify it, redistribute it or use it however you like.
 
-[ ] Retornar as metatags usando JS (provavelmente não tem como); caso não dê, usar PHP para ler e JSON retornando algum objeto literal para o player.
-// Aqui pode ser um problema se nem o PHP fizer isso, uma solução será passar tudo para JSON mesmo e criar objetos com as metatags no momento do download.
-// Mas aí teria o problema de setar as tags corretamente e ainda escrevê-las nos arquivos de áudio.
-// fopen.
+<hr>
 
-[ ] Compressor?
+<h4>R E Q U I R E M E N T S</h4>
+Some dependencies are required both to run the app and its download extension.
 
-[ ] Listagem com filtro e pesquisa utilizando JSON.
+|   lib             |   ver
+|---------------------------|-------------------------------
+|apache|`2.4`|
+|php|`7.2+`|
+|python|`2.6, 2.7, or 3.2+`|
+|youtube-dl|`current`|
+|ffmpeg|`binary`|
 
-[ ] No modo responsivo, trocar textos do nav menu para ícones e manter esses ícones full time na versão apk.
+<hr>
 
-[ ] Também para a versão app remover as informações da música na listagem (seja na biblioteca ou na página de playlists, apenas manter o card com thumbnail, play e add playlist).
+<h4>H O W&nbsp&nbsp&nbsp&nbspT O&nbsp&nbsp&nbsp&nbspU S E</h4>
 
-= = = = = = =
+<hr>
 
-Listagem (tabela)
-// Seguir esse padrão para exibir qualquer lista, seja a home, uma playlist ou um álbum.
-// Lista paginada.
-// O 'wireframe' será um componente e o conteúdo totalmente dinâmico.
-// Talvez posteriormente criar front-end próprio para o album ou artista, listando apenas determinados elementos ~talvez.
-// Desafio: como tratar remixes? // Provavelmente será listado na página do artista errado.
-COVER | PLAY | ADD TO PLAYLIST | TITLE | ARTIST | ALBUM | DURATION | RELEASE
+<h4>D E V E L O P M E N T</h4>
+
+Features:
+- [x] Basic front-end.
+- [x] Music data JSON listing.
+- [x] Playlist JSON link listing.
+- [x] Push metatags in music file.
+- [x] Music downloader.
+- [x] Add music metatags in JSON data.
+- [ ] Add playlist in JSON data.
+- [ ] Player.
+- [ ] Equalizer.
+- [ ] API Theme Editor.
+- [ ] Last.fm integration.
+- [ ] Spectogram.
+- [ ] Progress bar.
+- [ ] Controls: Play, Pause, Next, Back, Vol.
+- [ ] Compressor?
+- [ ] AJAX search (JSON?).
+
+PWA Miniplayer (res <= 512px):
+- [ ] Float nav menu (icons).
+- [ ] Keep icons full time in apk version.
+- [ ] Remove music info from listing.
+
+<hr>
+
+<h4>C O P Y R I G H T</h4>
+
+**Replay** is a public domain software and does not support copyrighted content in any way. <br>
+The Downloader feature of this player was developed to be used exclusively with royalty free content, choose correctly what you are going to download and do not incorporate this app in any project that violates copyright!
+
+<hr>
+
+<h4>S C R E E N S H O T S</h4>
+![alt text](https://)
