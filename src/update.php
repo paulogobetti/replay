@@ -17,7 +17,11 @@
     coreUpgrade( ) {
         Verifica se existe versões novas das dependências.
 
+        Copia "core antigo" e envia para diretório .old.
+
         getAppCore( )
+
+        Se der certo, remover .old else {deletar atuais e copiar .old novamente}
     }
     appUpgrade( ) {
         Verifica se existe versões novas do app.

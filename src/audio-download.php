@@ -46,6 +46,7 @@
     $musicFile->realease = $releaseYear;
     $musicFile->src = 'app/media/' . $fileName . '.mp3';
     $musicFile->thumbnail = 'app/media/' . $fileName . '.jpg';
+    $musicFile->duration = $duration;
 
     $data = file_get_contents("../app/data/library.json");
     $json = json_decode($data, true);
@@ -77,6 +78,11 @@
         }
         removeMusicFromPlaylist( ) {
             Remover objeto do JSON.
+        }
+
+        exportPlaylist( ) {
+            Exportar playlist em um arquivo zip.
+            // Provavelmente gzip ou unzip.
         }
 
     */

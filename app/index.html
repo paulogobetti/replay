@@ -14,6 +14,9 @@
 </head>
 
 <body>
+<div>
+    <audio src="" controls></audio>
+</div>
 <div id="body">
 
     <div class="container">
@@ -26,13 +29,26 @@
                 <a href="app/tag-editor.html"><p class="nav-menu-item">Music Editor</p></a>
             </div>
             <div class="playlists-container">
-                <h4>P L A Y L I S T S</h4>
+                <h5>P L A Y L I S T S</h5>
                 <div id="playlists" >
                 </div>
             </div>
         </div>
 
         <div id="content-display">  <!-- CONTENT -->
+            <table class="table">
+                <!-- <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Maximum Qty For Player</th>
+                    <th scope="col">Remove</th>
+                  </tr>
+                </thead> -->
+                <tbody id="tbody">
+                </tbody>
+              </table>
         </div>
     </div>
 
@@ -40,9 +56,10 @@
         <div class="player-controls">
             <div class="title-display"><h4>Artista - Nome da Música</h4></div>
             <div class="player-buttons">
-                <a href="#"><img src="app/img/back-button.svg" alt="" class="generic-btn"></a>
-                <a href="#"><img src="app/img/play-button.svg" alt="" class="play-button"></a>
-                <a href="#"><img src="app/img/foward-button.svg" alt="" class="generic-btn"></a>
+                <a href="#" id="back-button"><img src="app/img/back-button.svg" alt="" class="generic-btn"></a>
+                <a href="#" id="play-button"><img src="app/img/play-button.svg" alt="" class="play-button"></a>
+                <a href="#" id="pause-button"><img src="app/img/play-button.svg" alt="" class="play-button" hidden></a>
+                <a href="#" id="foward-button"><img src="app/img/foward-button.svg" alt="" class="generic-btn"></a>
             </div>
             <div class="progress-bar">
                 <div class="progress-update" style="width: 93%;"></div>
