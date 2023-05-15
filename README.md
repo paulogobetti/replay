@@ -1,12 +1,12 @@
 <p align="center">
 <img width="150" src="app/img/replay-logo-favicon.svg"></p>
 <h1 align="center">RePlay</h1>
+<p align="center">Web Music Player with GUI for youtube-dl command-line.<p>
+  
+<br>
 
 ><div align="center">⚠️
 ><div align="center">Attention: This project is under development.
-<br>
-
-Web Music Player with GUI for youtube-dl command-line.
 
 <br>
 
@@ -17,11 +17,12 @@ Web Music Player with GUI for youtube-dl command-line.
 - COPYRIGHT
 - SCREENSHOTS
 
-<br>
+
+
 <hr>
 
 <h4>D E S C R I P T I O N</h4>
-**Replay** is a Web App created to manage your personal music library, integrated with the youtube-dl command-line app. It is released to the public domain, which means you can modify it, redistribute it or use it however you like.
+Replay is a Web App created to manage your personal music library, integrated with the youtube-dl command-line app. It is released to the public domain, which means you can modify it, redistribute it or use it however you like.
 
 <hr>
 
@@ -51,14 +52,14 @@ Features:
 - [x] Push metatags in music file.
 - [x] Music downloader.
 - [x] Add music metatags in JSON data.
-- [ ] Add playlist in JSON data.
-- [ ] Player.
+- [x] Add playlist in JSON data.
+- [x] Player functions.
 - [ ] Equalizer.
 - [ ] API Theme Editor.
 - [ ] Last.fm integration.
 - [ ] Spectogram.
 - [ ] Progress bar.
-- [ ] Controls: Play, Pause, Next, Back, Vol.
+- [x] Controls: Play, Pause, Next, Back, Vol.
 - [ ] Compressor?
 - [ ] AJAX search (JSON?).
 
