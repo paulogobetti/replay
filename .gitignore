@@ -1,10 +1,8 @@
-app/components
+.backup
+
 app/media
-app/test.html
-components
 src/.cache
 src/includes
+
 src/debug.php
-src/backup.php
-src/teste.php
 

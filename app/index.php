@@ -1,3 +1,5 @@
+<?php?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,19 +17,21 @@
 
 <body>
 <div>
-    <audio src="" controls></audio>
+    <audio src="" id="audio-player" type="audio/mpeg" controls></audio>
 </div>
 <div id="body">
 
-    <div class="container">
-        <div id="global-side-bar">  <!-- SIDE BAR -->
+    <div class="container">   <!-- MAIN LAYOUT -->
+        <div id="background-image"></div>   <!-- DYNAMIC GLASSMORPHISM CONTENT BACKGROUND -->
+
+        <div id="global-side-bar">   <!-- SIDE BAR -->
             <img src="app/img/replay-logo-white.svg" alt="" class="logo">
-            <div class="nav-menu">  <!-- NAV MENU -->
-                <a href="/replay"><p class="nav-menu-item nav-menu-item-selected">Home</p></a> <br>
-                <a href="app/playlists.html"><p class="nav-menu-item">Playlists</p></a> <br>
-                <a href="app/downloader.html"><p class="nav-menu-item">Downloader</p></a> <br>
-                <a href="app/tag-editor.html"><p class="nav-menu-item">Music Editor</p></a>
-            </div>
+            <nav class="nav-menu">   <!-- NAV MENU -->
+                <a href="/replay" class="nav-menu-item nav-menu-item-selected"><img src="app/img/nav-menu-icon-01.svg" width="30" height="30" alt="" class="nav-menu-icon">&nbsp&nbspHome&nbsp&nbsp</a> <br>
+                <a href="app/playlists.php" class="nav-menu-item"><img src="app/img/nav-menu-icon-01.svg" width="30" height="30" alt="" class="nav-menu-icon">&nbsp&nbspPlaylists&nbsp&nbsp</a> <br>
+                <a href="app/downloader.php" class="nav-menu-item"><img src="app/img/nav-menu-icon-01.svg" width="30" height="30" alt="" class="nav-menu-icon">&nbsp&nbspDownloader&nbsp&nbsp</a> <br>
+                <a href="app/tag-editor.php" class="nav-menu-item"><img src="app/img/nav-menu-icon-01.svg" width="30" height="30" alt="" class="nav-menu-icon">&nbsp&nbspMusic Editor&nbsp&nbsp</a>
+            </nav>
             <div class="playlists-container">
                 <h5>P L A Y L I S T S</h5>
                 <div id="playlists" >
@@ -35,30 +39,21 @@
             </div>
         </div>
 
-        <div id="content-display">  <!-- CONTENT -->
+        <div id="content-display">    <!-- CONTENT -->
             <table class="table">
-                <!-- <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Item</th>
-                    <th scope="col">Qty</th>
-                    <th scope="col">Maximum Qty For Player</th>
-                    <th scope="col">Remove</th>
-                  </tr>
-                </thead> -->
                 <tbody id="tbody">
                 </tbody>
               </table>
         </div>
     </div>
 
-    <div class="player">  <!-- PLAYER -->
+    <div class="player">   <!-- PLAYER -->
         <div class="player-controls">
-            <div class="title-display"><h4>Artista - Nome da Música</h4></div>
+            <div class="title-display" id="title-display">&nbsp</div>
             <div class="player-buttons">
                 <a href="#" id="back-button"><img src="app/img/back-button.svg" alt="" class="generic-btn"></a>
                 <a href="#" id="play-button"><img src="app/img/play-button.svg" alt="" class="play-button"></a>
-                <a href="#" id="pause-button"><img src="app/img/play-button.svg" alt="" class="play-button" hidden></a>
+                <a href="#" id="pause-button"><img src="app/img/pause-button.svg" alt="" class="play-button"></a>
                 <a href="#" id="foward-button"><img src="app/img/foward-button.svg" alt="" class="generic-btn"></a>
             </div>
             <div class="progress-bar">

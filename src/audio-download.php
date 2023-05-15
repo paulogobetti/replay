@@ -32,16 +32,18 @@
     $fileName = trim($getFileName);
     $musicInfo = explode('#', $getMusicInfo);
 
-    $track = $musicInfo[0];
-    $artist = $musicInfo[1];
-    $album = $musicInfo[2];
+    $track = ucwords(strtolower($musicInfo[0]));
+    $artist = ucwords(strtolower($musicInfo[1]));
+    $mainArtist = explode(',', $artist);
+
+    $album = ucwords(strtolower($musicInfo[2]));
     $releaseYear = $musicInfo[3];
     $duration = $musicInfo[4];
 
     $musicFile = new stdClass;
     $musicFile->track_id = uniqid();
     $musicFile->name = $track;
-    $musicFile->artist = $artist;
+    $musicFile->artist = $mainArtist[0];
     $musicFile->album = $album;
     $musicFile->realease = $releaseYear;
     $musicFile->src = 'app/media/' . $fileName . '.mp3';
@@ -73,6 +75,7 @@
         removeMusicFromData( ) {
             Remover objeto do JSON.
         }
+
         addMusicToPlaylist( ) {
             Instanciar objeto JSON na memória - e principalmente gravar no arquivo - apenas se o download for bem-sucedido.
         }
