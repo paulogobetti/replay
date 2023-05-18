@@ -128,6 +128,12 @@ const playMusic = ( ) => {
 
 const playMusicFromList = (music) => {
     let titleDisplay = document.getElementById('title-display')
+    let imgUrl = music.thumbnail
+
+    // let musicThumbnail = document.getElementById('player-thumbnail')
+    // musicThumbnail.src = music.thumbnail
+
+    switchImageBg(imgUrl)
 
     titleDisplay.innerHTML = '<h4>' + music.artist + ' - ' + music.name + '<h4>'
 
@@ -136,6 +142,17 @@ const playMusicFromList = (music) => {
 
     audioPlayer.src = music.src
     audioPlayer.play()
+}
+
+const switchImageBg = (imgUrl) => {
+    let imageClass = 'url("' + imgUrl + '")'
+
+    let contentDisplay = document.getElementById('content-display')
+
+    let imageBg = document.getElementById('background-image')
+    
+    imageBg.style.backgroundImage = imageClass
+    contentDisplay.style.backgroundImage = "linear-gradient(to right bottom, #1a1b20, #202128bb)"
 }
 
 const pauseMusic = ( ) => {

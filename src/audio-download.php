@@ -2,6 +2,7 @@
 
 /*
 
+    --no-playlist               Ignora playlists e baixa apenas o vídeo referenciado no link.
     --cache-dir .cache          Setar diretório de cache.
     --no-check-certificate      Ignorar checagem de SSL.
     --no-continue               Parar processo caso alguma informação seja perdida.
@@ -18,13 +19,13 @@
 
     $url = $_POST['url'];
 
-    $getFileCommand = "includes/youtube-dl --cache-dir .cache --no-check-certificate --no-continue -x --audio-format mp3 --audio-quality 320K --add-metadata --embed-thumbnail --write-thumbnail --ffmpeg-location includes/ffmpeg-*/ffmpeg -o '../app/media/%(artist)s - %(track)s - %(album)s - %(release_year)s.%(ext)s' " . $url . " 2>&1";
+    $getFileCommand = 'includes/youtube-dl --no-playlist --cache-dir .cache --no-check-certificate --no-continue -x --audio-format mp3 --audio-quality 320K --add-metadata --embed-thumbnail --write-thumbnail --ffmpeg-location includes/ffmpeg-*/ffmpeg -o "../app/media/%(artist)s - %(track)s - %(album)s - %(release_year)s.%(ext)s" ' . $url . ' 2>&1';
     echo "<pre>$getFileCommand</pre>";
     $getFile = shell_exec($getFileCommand);
     echo "<pre>$getFile</pre>";
 
-    $getMusicInfoCommand = 'youtube-dl --cache-dir .cache --no-check-certificate --get-filename ' . $url . ' -o "%(track)s#%(artist)s#%(album)s#%(release_year)s#%(duration)s" 2>&1';
-    $getFileNameCommand  = 'youtube-dl --cache-dir .cache --no-check-certificate --get-filename ' . $url . ' -o "%(artist)s - %(track)s - %(album)s - %(release_year)s" 2>&1';
+    $getMusicInfoCommand = 'youtube-dl --no-playlist --cache-dir .cache --no-check-certificate --get-filename ' . $url . ' -o "%(track)s#%(artist)s#%(album)s#%(release_year)s#%(duration)s" 2>&1';
+    $getFileNameCommand  = 'youtube-dl --no-playlist --cache-dir .cache --no-check-certificate --get-filename ' . $url . ' -o "%(artist)s - %(track)s - %(album)s - %(release_year)s" 2>&1';
 
     $getMusicInfo = shell_exec($getMusicInfoCommand);
     $getFileName = shell_exec($getFileNameCommand);
