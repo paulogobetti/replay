@@ -23,7 +23,10 @@
 
 <h4>D E S C R I P T I O N</h4>
 Replay is a Web App created to manage your personal music library, integrated with the youtube-dl command-line app. It is released to the public domain, which means you can modify it, redistribute it or use it however you like.
-
+<br><br>
+Demo: <a href="https://demo.paulogobetti.com/replay">here</a>.
+<br><br>
+⚠️ Warning: The Downloader feature only works with audio media (Tema, Topic, 'official channels', etc.), which have the appropriate tags that will be extracted from the object. Attempting to download a link that does not have the tags will generate an incorrect JSON object and break the dynamic listing.
 <hr>
 
 <h4>R E Q U I R E M E N T S</h4>
@@ -78,4 +81,4 @@ The Downloader feature of this player was developed to be used exclusively with 
 <hr>
 
 <h4>S C R E E N S H O T S</h4>
-![alt text](https://)
+<img src="https://paulogobetti.com/media/replay-screenshot.png">
