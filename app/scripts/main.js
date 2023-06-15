@@ -109,6 +109,7 @@ listPlaylists( )
 let audioPlayer = document.getElementById('audio-player')
 let playButton = document.getElementById('play-button')
 let pauseButton = document.getElementById('pause-button')
+let range = document.getElementById('range')
 pauseButton.style.display = 'none'
 
 document.addEventListener('DOMContentLoaded', ( ) => {
@@ -142,6 +143,8 @@ const playMusicFromList = (music) => {
 
     audioPlayer.src = music.src
     audioPlayer.play()
+
+
 }
 
 const switchImageBg = (imgUrl) => {
@@ -160,6 +163,32 @@ const pauseMusic = ( ) => {
     pauseButton.style.display = 'none'
 
     audioPlayer.pause()
+}
+
+const velControl = (vel) => {
+    // defaultPlaybackRate
+    let audio = document.querySelector('audio')
+    audio.defaultPlaybackRate = vel
+
+    audio.load()
+    audio.play()
+}
+
+// Range Progress Update
+audioPlayer.onloadedmetadata = function() {
+    range.max = audioPlayer.duration
+    range.value = audioPlayer.currentTime
+}
+
+if(audioPlayer) {
+    setInterval(() => {
+        range.value = audioPlayer.currentTime
+    }, 666)
+}
+
+range.onchange = function( ) {
+    audioPlayer.play()
+    audioPlayer.currentTime = range.value
 }
 
 /*

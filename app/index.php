@@ -1,5 +1,3 @@
-<?php?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,9 +61,7 @@
                 <a href="#" id="pause-button"><img src="app/img/pause-button.svg" alt="" class="play-button"></a>
                 <a href="#" id="foward-button"><img src="app/img/foward-button.svg" alt="" class="generic-btn"></a>
             </div>
-            <div class="progress-bar">
-                <div class="progress-update" style="width: 93%;"></div>
-            </div>
+            <input type="range" name="range" value="0" id="range" class="" onclick="">
         </div>
     </div>
 
