@@ -1,8 +1,9 @@
 .backup
 
+.old
+app/data
 app/media
 src/.cache
 src/includes
 
 src/debug.php
-
