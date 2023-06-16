@@ -1,32 +1,10 @@
 <?php
 
-/*
+    $youtubeDlUrl = 'https://yt-dl.org/downloads/latest/youtube-dl';
+    $ffmpegUrl = 'https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz';
 
-    getAppCore( ) {
-        Baixa as dependências.
+    $command = 'mkdir includes && curl -L ' . $youtubeDlUrl . ' --output ./includes/youtube-dl && curl ' . $ffmpegUrl . ' --output ./includes/ffmpeg && tar -Jxf ./includes/ffmpeg -C ./includes/ && rm -rf ./includes/ffmpeg && chmod +x -R ./includes';
 
-        ... ffmpeg bin src
-        ... https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
+    $output = exec($command);
 
-        ... youtube-dl src
-        ... sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
-        ... sudo chmod a+rx /usr/local/bin/youtube-dl
-
-        Atribui ao usuário do apache (daemon ou www-data) o novo download.
-    }
-    coreUpgrade( ) {
-        Verifica se existe versões novas das dependências.
-
-        Copia "core antigo" e envia para diretório .old.
-
-        getAppCore( )
-
-        Se der certo, remover .old else {deletar atuais e copiar .old novamente}
-    }
-    appUpgrade( ) {
-        Verifica se existe versões novas do app.
-
-        // git clone ...replay
-    }
-
-*/
+    var_dump($output);

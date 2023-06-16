@@ -15,17 +15,17 @@
     --ffmpeg-location DIR       Caminho do ffmpeg // Binário local, sem a necessidade de elevar privilégios para libs do sistema.
     -o                          Personalizar o arquivo e diretório de saída.
 
-*/
-
+*/ 
+ 
     $url = $_POST['url'];
 
-    $getFileCommand = 'includes/youtube-dl --no-playlist --cache-dir .cache --no-check-certificate --no-continue -x --audio-format mp3 --audio-quality 320K --add-metadata --embed-thumbnail --write-thumbnail --ffmpeg-location includes/ffmpeg-*/ffmpeg -o "../app/media/%(artist)s - %(track)s - %(album)s - %(release_year)s.%(ext)s" ' . $url . ' 2>&1';
+    $getFileCommand = 'python3 ./includes/youtube-dl --no-playlist --cache-dir .cache --no-check-certificate --no-continue -x --audio-format mp3 --audio-quality 320K --add-metadata --embed-thumbnail --write-thumbnail --ffmpeg-location ./includes/ffmpeg-*/ffmpeg -o "../app/media/%(artist)s - %(track)s - %(album)s - %(release_year)s.%(ext)s" ' . $url . ' 2>&1';
     echo "<pre>$getFileCommand</pre>";
     $getFile = shell_exec($getFileCommand);
     echo "<pre>$getFile</pre>";
 
-    $getMusicInfoCommand = 'youtube-dl --no-playlist --cache-dir .cache --no-check-certificate --get-filename ' . $url . ' -o "%(track)s#%(artist)s#%(album)s#%(release_year)s#%(duration)s" 2>&1';
-    $getFileNameCommand  = 'youtube-dl --no-playlist --cache-dir .cache --no-check-certificate --get-filename ' . $url . ' -o "%(artist)s - %(track)s - %(album)s - %(release_year)s" 2>&1';
+    $getMusicInfoCommand = 'python3 ./includes/youtube-dl --no-playlist --cache-dir .cache --no-check-certificate --get-filename ' . $url . ' -o "%(track)s#%(artist)s#%(album)s#%(release_year)s#%(duration)s" 2>&1';
+    $getFileNameCommand  = 'python3 ./includes/youtube-dl --no-playlist --cache-dir .cache --no-check-certificate --get-filename ' . $url . ' -o "%(artist)s - %(track)s - %(album)s - %(release_year)s" 2>&1';
 
     $getMusicInfo = shell_exec($getMusicInfoCommand);
     $getFileName = shell_exec($getFileNameCommand);
