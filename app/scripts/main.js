@@ -2,13 +2,11 @@ let mainPlaylist = []
 
 const listLibrary = ( ) => {
     fetch('app/data/library.json')
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
         let tbody = document.getElementById('tbody')
         tbody.innerText = ''
         data.forEach(i => {
-            // Retornar paginado... while?
-
             let musicLineItem = document.createElement('tr')
             musicLineItem.classList.add('music-card-line')
 
@@ -46,9 +44,12 @@ const listLibrary = ( ) => {
             musicLineItem.append(playButtonCol)
 
             buttonLink = document.createElement('a')
-            let addToPlaylistButton = document.createElement('img')
-            addToPlaylistButton.src = 'app/img/add-to-playlist-button.svg'
-            addToPlaylistButton.classList.add('generic-btn')
+            let addToPlaylistButton = document.createElement('button')
+            addToPlaylistButton.innerHTML = i.track_id
+            addToPlaylistButton.classList.add('modal-button')
+            let trackID = i.track_id
+            addToPlaylistButton.setAttribute('onclick', 'showModal("' + trackID + '")')
+
             buttonLink.append(addToPlaylistButton)
             addToPlaylistCol.append(buttonLink)
             musicLineItem.append(addToPlaylistCol)
@@ -88,10 +89,10 @@ listLibrary( )
 
 const listPlaylists = ( ) => {
     fetch('app/data/playlist.json')
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
         data.forEach(i => {
-            let playlists = document.getElementById('playlists')
+            let playlists = document.getElementsByClassName('playlists')[0]
 
             let playlistLink = document.createElement('a')
             let playlistTitle = document.createElement('h3')
@@ -106,6 +107,27 @@ const listPlaylists = ( ) => {
 }
 listPlaylists( )
 
+const listPlaylistsModal = (id) => {
+    let playlistsModal = document.getElementsByClassName('playlists')[1]
+    playlistsModal.innerHTML = ''
+    fetch('app/data/playlist.json')
+    .then(res => res.json())
+    .then(data => {
+        data.forEach(playlist => {
+            let playlistLinkModal = document.createElement('a')
+            let playlistLinkModalTitle = document.createElement('h3')
+
+            playlistLinkModal.href = '../src/add-to-playlist.php/?playlist=' + playlist.playlist_id + '&music=' + id
+            playlistLinkModalTitle.innerHTML = playlist.playlist_name
+
+            playlistLinkModal.append(playlistLinkModalTitle)
+
+            playlistsModal.append(playlistLinkModal)
+        })
+    })
+}
+
+// Player
 let audioPlayer = document.getElementById('audio-player')
 let playButton = document.getElementById('play-button')
 let pauseButton = document.getElementById('pause-button')
@@ -143,8 +165,6 @@ const playMusicFromList = (music) => {
 
     audioPlayer.src = music.src
     audioPlayer.play()
-
-
 }
 
 const switchImageBg = (imgUrl) => {
@@ -153,7 +173,7 @@ const switchImageBg = (imgUrl) => {
     let contentDisplay = document.getElementById('content-display')
 
     let imageBg = document.getElementById('background-image')
-    
+
     imageBg.style.backgroundImage = imageClass
     contentDisplay.style.backgroundImage = "linear-gradient(to right bottom, #1a1b20, #202128bb)"
 }
@@ -181,14 +201,47 @@ audioPlayer.onloadedmetadata = function() {
 }
 
 if(audioPlayer) {
-    setInterval(() => {
+    setInterval(( ) => {
         range.value = audioPlayer.currentTime
-    }, 666)
+    }, 888)
 }
 
-range.onchange = function( ) {
+range.onchange = ( ) => {
     audioPlayer.play()
     audioPlayer.currentTime = range.value
+}
+
+// Modals
+
+let modal = document.getElementsByClassName('modal');
+let button = document.getElementsByClassName("modal-button"); // MyBtn
+let span = document.getElementsByClassName("close");
+
+button[0].onclick = ( ) => {
+    modal[0].style.display = "block";
+}
+
+span[0].onclick = ( ) => {
+    modal[0].style.display = "none";
+}
+
+span[1].onclick = ( ) => {
+    modal[1].style.display = "none";
+}
+
+window.onclick = (event) => {
+    console.log('Click')
+    if(event.target == modal[0] || event.target == modal[1]) {
+        modal[0].style.display = "none";
+        modal[1].style.display = "none";
+    }
+}
+
+const showModal = (id) => {
+    console.log(id)
+    listPlaylistsModal(id)
+
+    modal[1].style.display = "block";
 }
 
 /*
