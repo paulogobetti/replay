@@ -43,6 +43,33 @@
         $command = $ytDownloaderAlias . ' --no-playlist --cache-dir ' . $cacheDir . ' --no-check-certificate --no-continue -x --audio-format mp3 --audio-quality 320K --write-thumbnail --ffmpeg-location ./includes/ffmpeg-*/ffmpeg -o "../app/media/temp.%(ext)s" ' . $musicURL . ' 2>&1';
 
         shell_exec($command);
+
+        cropAndInsertCover();
+    }
+
+    function cropAndInsertCover() {
+        global $musicURL;
+        global $ffmpegAlias;
+        global $ytDownloaderAlias;
+        global $cacheDir;
+
+        $getThumbnailUrl = $ytDownloaderAlias . ' --no-playlist --cache-dir ' . $cacheDir . ' --no-check-certificate --no-continue --get-thumbnail ' . $musicURL;
+        $getFileType = explode('.', shell_exec($getThumbnailUrl));
+        $fileType = $getFileType[3];
+
+        print_r($fileType);
+
+        //$crop   = $ffmpegAlias . ' -i "../app/media/temp'.$fileType.'" -filter:v "crop=out_w=in_h" "../app/media/cover.jpg"';
+        //$insert = $ffmpegAlias . ' -i "../app/media/temp.mp3" -i "../app/media/cover.jpg" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "../app/media/final.mp3"';
+
+        //$insertCoverCommand = 'ffmpeg -i temp.mp3 -i "Still Corners, Tessa Murray, Greg Hughes - Till We Meet Again - The Last Exit - 2021.jpg" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "Still Corners, Tessa Murray, Greg Hughes - Till We Meet Again - The Last Exit - 2021.mp3"';
+
+
+        // shell_exec($crop);
+        // shell_exec($insert);
+
+        // var_dump($teste);
+        // var_dump($teste2);
     }
 
     // function getThumbnail() {
@@ -79,31 +106,15 @@
         //
     }
 
-    function cropAndInsertCover() {
-        global $ffmpegAlias;
-
-        $crop   = $ffmpegAlias . ' -i "../app/media/temp.webp" -filter:v "crop=out_w=in_h" "../app/media/cover.jpg"';
-        $insert = $ffmpegAlias . ' -i "../app/media/temp.mp3" -i "../app/media/cover.jpg" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "../app/media/final.mp3"';
-
-        //$insertCoverCommand = 'ffmpeg -i temp.mp3 -i "Still Corners, Tessa Murray, Greg Hughes - Till We Meet Again - The Last Exit - 2021.jpg" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "Still Corners, Tessa Murray, Greg Hughes - Till We Meet Again - The Last Exit - 2021.mp3"';
-
-        $teste = shell_exec($crop);
-        $teste2 = shell_exec($insert);
-
-        var_dump($teste);
-        var_dump($teste2);
-    }
-
-    function getMusic() {
+    function main() {
         global $musicURL;
 
         if(!$musicURL) { header('location: /'); }
 
         $musicInfo = getMeta();
         getFiles();
-        cropAndInsertCover();
 
-        print_r($musicInfo);
+        // print_r($musicInfo);
     }
 
     cropAndInsertCover();
