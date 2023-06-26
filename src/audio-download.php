@@ -1,7 +1,6 @@
 <?php
 
 /*
-
     --no-playlist               Ignora playlists e baixa apenas o vídeo referenciado no link.
     --cache-dir .cache          Setar diretório de cache.
     --no-check-certificate      Ignorar checagem de SSL.
@@ -14,7 +13,6 @@
     --write-thumbnail           Salvar arquivo thumbnail.
     --ffmpeg-location DIR       Caminho do ffmpeg // Binário local, sem a necessidade de elevar privilégios para libs do sistema.
     -o                          Personalizar o arquivo e diretório de saída.
-
 */
 
     $musicURL = $_POST['url'];
@@ -53,56 +51,30 @@
         global $ytDownloaderAlias;
         global $cacheDir;
 
-        $getThumbnailUrl = $ytDownloaderAlias . ' --no-playlist --cache-dir ' . $cacheDir . ' --no-check-certificate --no-continue --get-thumbnail ' . $musicURL;
-        $getFileType = explode('.', shell_exec($getThumbnailUrl));
-        $fileType = $getFileType[3];
+        $getThumbnailURL = $ytDownloaderAlias . ' --no-playlist --cache-dir ' . $cacheDir . ' --no-check-certificate --no-continue --get-thumbnail ' . $musicURL;
+        $getFileType     = explode('.', shell_exec($getThumbnailURL));
+        $fileType        = trim($getFileType[3]);
 
-        print_r($fileType);
+        $crop   = $ffmpegAlias . ' -i "../app/media/temp.'.$fileType.'" -filter:v "crop=out_w=in_h" "../app/media/cover.png"';
+        $insert = $ffmpegAlias . ' -i "../app/media/temp.mp3" -i "../app/media/cover.png" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "../app/media/final.mp3"';
 
-        //$crop   = $ffmpegAlias . ' -i "../app/media/temp'.$fileType.'" -filter:v "crop=out_w=in_h" "../app/media/cover.jpg"';
-        //$insert = $ffmpegAlias . ' -i "../app/media/temp.mp3" -i "../app/media/cover.jpg" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "../app/media/final.mp3"';
-
-        //$insertCoverCommand = 'ffmpeg -i temp.mp3 -i "Still Corners, Tessa Murray, Greg Hughes - Till We Meet Again - The Last Exit - 2021.jpg" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "Still Corners, Tessa Murray, Greg Hughes - Till We Meet Again - The Last Exit - 2021.mp3"';
-
-
-        // shell_exec($crop);
-        // shell_exec($insert);
-
-        // var_dump($teste);
-        // var_dump($teste2);
+        shell_exec($crop);
+        shell_exec($insert);
     }
-
-    // function getThumbnail() {
-    //     global $musicURL;
-    //     global $ytDownloaderAlias;
-    //     global $cacheDir;
-
-    //     $command = $ytDownloaderAlias . ' --no-playlist --cache-dir ' . $cacheDir . ' --no-check-certificate --no-continue --write-thumbnail -o "./temp.%(ext)s" ' . $musicURL . ' 2>&1';
-
-    //     return shell_exec($command);
-    // }
-
-    // function insertThumbnail() {
-    //     global $ffmpegAlias;
-
-    //     print_r($musicInfo);
-    //     // $teste = $musicInfo->track;
-    //     // $command = $ffmpegAlias . ' -i "../app/media/temp.webp" -filter:v "crop=out_w=in_h" "' . $teste . '.jpg"';
-
-    //     // shell_exec($command);
-
-    //     // echo $command;
-    // }
 
     function addMusicToData() {
         //
     }
 
-    function clearFilesAndCache() {
+    function clearFiles() {
         //
     }
 
-    function checkSucess(){
+    function checkSucess() {
+        //
+    }
+
+    function purgeCache() {
         //
     }
 
@@ -117,7 +89,7 @@
         // print_r($musicInfo);
     }
 
-    cropAndInsertCover();
+    main();
 
 
 
