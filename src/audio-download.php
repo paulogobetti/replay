@@ -52,21 +52,50 @@
         global $cacheDir;
 
         $getThumbnailURL = $ytDownloaderAlias . ' --no-playlist --cache-dir ' . $cacheDir . ' --no-check-certificate --no-continue --get-thumbnail ' . $musicURL;
-        $getFileType     = explode('.', shell_exec($getThumbnailURL));
-        $fileType        = trim($getFileType[3]);
+        $explode = explode('.', shell_exec($getThumbnailURL));
+        $getFileType = trim($explode[3]);
+        $fileType = $getFileType;
 
         $crop   = $ffmpegAlias . ' -i "../app/media/temp.'.$fileType.'" -filter:v "crop=out_w=in_h" "../app/media/cover.png"';
         $insert = $ffmpegAlias . ' -i "../app/media/temp.mp3" -i "../app/media/cover.png" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "../app/media/final.mp3"';
 
         shell_exec($crop);
         shell_exec($insert);
-    }
 
-    function addMusicToData() {
-        //
+        // renomear a imagem
+
+        // clearFiles($fileType);
     }
 
     function clearFiles() {
+        $command = 'rm "../app/media/temp.mp3"';
+        // $command = 'rm "../app/media/temp.mp3" && rm "../app/media/temp.'.$fileType.'"';
+
+        shell_exec($command);
+    }
+
+    function postProcessing($musicInfo) {
+        global $ffmpegAlias;
+
+        $artist = explode(',', $musicInfo[0]);
+        $track = $musicInfo[1];
+        $album = $musicInfo[2];
+        $release = $musicInfo[3];
+        $duration = $musicInfo[4];
+
+        $fileNameString = $artist[0] . '_' . $track . '_' . $release;
+        $fileName = str_replace(array(' ', "\t", "\n"), '', $fileNameString);
+
+        $command = $ffmpegAlias . ' -i "../app/media/final.mp3" -metadata title="'.$track.'" -metadata artist="'.$artist[0].'" -metadata album="'.$album.'" -metadata date="'.$release.'" -c copy "../app/media/'.$fileName.'.mp3"';
+
+        shell_exec($command);
+
+        echo '<pre>';
+        var_dump($artist[0], $track, $album, $release, $duration);
+        echo '</pre>';
+    }
+
+    function addMusicToData() {
         //
     }
 
@@ -84,7 +113,10 @@
         if(!$musicURL) { header('location: /'); }
 
         $musicInfo = getMeta();
+
         getFiles();
+
+        postProcessing($musicInfo);
 
         // print_r($musicInfo);
     }
@@ -115,19 +147,6 @@
 
 
 
-
-
-
-
-
-
-
-
-    // $thumbnail = getThumbnail();
-
-
-    // echo "<br>";
-    // print_r($thumbnail);
 
 
 
