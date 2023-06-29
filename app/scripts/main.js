@@ -70,11 +70,9 @@ const listLibrary = ( ) => {
             musicLineItem.append(albumCol)
 
             let duration = document.createElement('h3')
-            let durationInMinutes = i.duration / 60
-            let formatedDuration = durationInMinutes.toString().substring(0, 4)
-            // let formatedDuration = new Intl.DateTimeFormat('minute', { timeStyle: 'short' }).format(durationInMinutes)
-            // console.log(new Intl.DateTimeFormat('default', { hour: 'numeric', minute: 'numeric', second: 'numeric' }).format(durationInMinutes))
-            duration.innerHTML = formatedDuration
+            let minutes = Math.floor(i.duration / 60)
+            let seconds = i.duration - minutes * 60
+            duration.innerHTML = minutes + ':' + seconds
             durationCol.append(duration)
             musicLineItem.append(durationCol)
 
