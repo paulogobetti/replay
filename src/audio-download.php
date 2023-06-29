@@ -1,32 +1,31 @@
 <?php
 
 /*
-    --no-playlist               Ignora playlists e baixa apenas o vídeo referenciado no link.
-    --cache-dir .cache          Setar diretório de cache.
+    --no-playlist               Ignorar playlists e baixar apenas o vídeo referenciado no link.
+    --cache-dir DIR             Setar diretório de cache (youtube-dl).
     --no-check-certificate      Ignorar checagem de SSL.
     --no-continue               Parar processo caso alguma informação seja perdida.
     -x                          Extrair o áudio apenas.
     --audio-format mp3          Setar formato de saída mp3.
     --audio-quality 320K        Setar bitrate para 320Kbps.
-    --add-metadata              Adicionar metadata ao arquivo de áudio (ffmpeg).
+    --add-metadata              Inserir metadata ao arquivo de áudio.
     --embed-thumbnail           Inserir thumbnail no arquivo de áudio.
-    --write-thumbnail           Salvar arquivo thumbnail.
-    --ffmpeg-location DIR       Caminho do ffmpeg // Binário local, sem a necessidade de elevar privilégios para libs do sistema.
-    -o                          Personalizar o arquivo e diretório de saída.
+    --write-thumbnail           Salvar thumbnail.
+    --ffmpeg-location DIR       Caminho do ffmpeg.
+    -o                          Setar arquivo e diretório de saída.
 */
 
     $musicURL = $_POST['url'];
 
-    $ytDownloaderAlias = 'python3 ./includes/youtube-dl';
-    $ffmpegAlias = './includes/ffmpeg-*/ffmpeg';
-    $cacheDir = './.cache';
+    const YOUTUBEDL = 'python3 ./includes/youtube-dl';
+    const FFMPEG = './includes/ffmpeg-*/ffmpeg';
+    const CACHE_DIR = './.cache';
+    const MEDIA_DIR = '../app/media/';
 
     function getMeta() {
         global $musicURL;
-        global $ytDownloaderAlias;
-        global $cacheDir;
 
-        $command = $ytDownloaderAlias . ' --no-playlist --cache-dir ' . $cacheDir . ' --no-check-certificate --no-continue --get-filename -o "%(artist)s#%(track)s#%(album)s#%(release_year)s#%(duration)s" ' . $musicURL . ' 2>&1';
+        $command = YOUTUBEDL . ' --no-playlist --cache-dir ' . CACHE_DIR . ' --no-check-certificate --no-continue --get-filename -o "%(artist)s#%(track)s#%(album)s#%(release_year)s#%(duration)s" ' . $musicURL . ' 2>&1';
 
         $getMeta = explode('#', trim(shell_exec($command)));
         $artists = explode(',', $getMeta[0]);
@@ -34,14 +33,14 @@
         $music = new stdClass;
         $music->id = uniqid();
         $music->artist = $artists[0];
-        $music->track = $getMeta[1];
+        $music->track = str_replace(array('originalmix', 'Original Mix', 'Original_Mix', 'original mix', 'original_mix', '(originalmix)', '(Original Mix)', '(Original_Mix)', '(original mix)', '(original_mix)'), '', $getMeta[1]);
         $music->album = $getMeta[2];
         $music->release = $getMeta[3];
         $music->duration = $getMeta[4];
 
         $fileNameString = $music->artist . '_' . $music->track . '_' . $music->release;
         $insertUnderscore = str_replace(' ', '_', $fileNameString);
-        $fileName = str_replace(array(' ', "\t", "\n", '(', ')', '.', '/'), '', $insertUnderscore);
+        $fileName = str_replace(array(' ', "\t", "\n", '(', ')', '.', '/', 'originalmix', 'Original Mix', 'Original_Mix', 'original mix', 'original_mix'), '', $insertUnderscore);
 
         $music->src = 'app/media/' . $fileName . '.mp3';
         $music->thumbnail = 'app/media/' . $fileName . '.png';
@@ -53,10 +52,8 @@
 
     function getFiles() {
         global $musicURL;
-        global $ytDownloaderAlias;
-        global $cacheDir;
 
-        $command = $ytDownloaderAlias . ' --no-playlist --cache-dir ' . $cacheDir . ' --no-check-certificate --no-continue -x --audio-format mp3 --audio-quality 320K --write-thumbnail --ffmpeg-location ./includes/ffmpeg-*/ffmpeg -o "../app/media/temp.%(ext)s" ' . $musicURL . ' 2>&1';
+        $command = YOUTUBEDL . ' --no-playlist --cache-dir ' . CACHE_DIR . ' --no-check-certificate --no-continue -x --audio-format mp3 --audio-quality 320K --write-thumbnail --ffmpeg-location ' . FFMPEG . ' -o "' . MEDIA_DIR . 'temp.%(ext)s" ' . $musicURL . ' 2>&1';
 
         shell_exec($command);
 
@@ -65,27 +62,22 @@
 
     function cropAndInsertCover() {
         global $musicURL;
-        global $ffmpegAlias;
-        global $ytDownloaderAlias;
-        global $cacheDir;
         global $fileType;
 
-        $getThumbnailURL = $ytDownloaderAlias . ' --no-playlist --cache-dir ' . $cacheDir . ' --no-check-certificate --no-continue --get-thumbnail ' . $musicURL;
+        $getThumbnailURL = YOUTUBEDL . ' --no-playlist --cache-dir ' . CACHE_DIR . ' --no-check-certificate --no-continue --get-thumbnail ' . $musicURL;
         $explode = explode('.', shell_exec($getThumbnailURL));
         $getFileType = trim($explode[3]);
         $fileType = $getFileType;
 
-        $crop   = $ffmpegAlias . ' -i "../app/media/temp.'.$fileType.'" -filter:v "crop=out_w=in_h" "../app/media/cover.png"';
-        $insert = $ffmpegAlias . ' -i "../app/media/temp.mp3" -i "../app/media/cover.png" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "../app/media/final.mp3"';
+        $crop   = FFMPEG . ' -i "' . MEDIA_DIR . 'temp.'.$fileType.'" -filter:v "crop=out_w=in_h" "' . MEDIA_DIR . 'cover.png"';
+        $insert = FFMPEG . ' -i "' . MEDIA_DIR . 'temp.mp3" -i "'.MEDIA_DIR.'cover.png" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "' . MEDIA_DIR . 'final.mp3"';
 
         shell_exec($crop);
         shell_exec($insert);
     }
 
     function postProcessing($music) {
-        global $ffmpegAlias;
-
-        $command = $ffmpegAlias . ' -i "../app/media/final.mp3" -metadata title="'.$music->track.'" -metadata artist="'.$music->artist.'" -metadata album="'.$music->album.'" -metadata date="'.$music->release.'" -c copy "../app/media/'.$music->file_name.'.mp3"';
+        $command = FFMPEG . ' -i "' . MEDIA_DIR . 'final.mp3" -metadata title="'.$music->track.'" -metadata artist="'.$music->artist.'" -metadata album="'.$music->album.'" -metadata date="'.$music->release.'" -c copy "' . MEDIA_DIR . ''.$music->file_name.'.mp3"';
 
         shell_exec($command);
 
@@ -93,7 +85,7 @@
     }
 
     function renameThumbnail($fileName) {
-        $command = 'mv "../app/media/cover.png" "../app/media/'.$fileName.'.png"';
+        $command = 'mv "' . MEDIA_DIR . 'cover.png" "' . MEDIA_DIR . ''.$fileName.'.png"';
 
         shell_exec($command);
     }
@@ -101,7 +93,7 @@
     function clearFiles() {
         global $fileType;
 
-        $command = 'rm "../app/media/temp.mp3" "../app/media/final.mp3" "../app/media//temp.'.$fileType.'"';
+        $command = 'rm "' . MEDIA_DIR . 'temp.mp3" "' . MEDIA_DIR . 'final.mp3" "' . MEDIA_DIR . 'temp.'.$fileType.'"';
 
         shell_exec($command);
     }
@@ -121,7 +113,11 @@
     }
 
     function purgeCache() {
-        //
+        header("Cache-Control: no-cache, no-store, must-revalidate");
+
+        echo '<script src="../app/data/library.json"></script>';
+
+        header('location: /');
     }
 
     function main() {
@@ -138,6 +134,8 @@
         clearFiles();
 
         addMusicToData($music);
+
+        purgeCache();
     }
 
     main();
