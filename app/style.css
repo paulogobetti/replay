@@ -29,10 +29,10 @@ a>svg {margin-bottom: -7px;}
 
 /* CONTENT CONTAINER */
 
-#content-display {background-image: linear-gradient(to right bottom,#1a1b20 , #202128); width: 82%; padding: 50px; overflow-y: scroll; scrollbar-width: thin; scrollbar-color: #6f2dff; overflow-x: hidden; transition: 5s;}
-#content-display::-webkit-scrollbar, .playlists-container::-webkit-scrollbar {width: 5px;}
-#content-display::-webkit-scrollbar-track, .playlists-container::-webkit-scrollbar-track {background: transparent; padding: 2px;}
-#content-display::-webkit-scrollbar-thumb {background-color: #6f2dff;}
+#content {color: #fff; background-image: linear-gradient(to right bottom,#1a1b20 , #202128); width: 82%; padding: 50px; overflow-y: scroll; scrollbar-width: thin; scrollbar-color: #6f2dff; overflow-x: hidden; transition: 5s;}
+#content::-webkit-scrollbar, .playlists-container::-webkit-scrollbar {width: 5px;}
+#content::-webkit-scrollbar-track, .playlists-container::-webkit-scrollbar-track {background: transparent; padding: 2px;}
+#content::-webkit-scrollbar-thumb {background-color: #6f2dff;}
 .playlists-container::-webkit-scrollbar-thumb {background-color: #151414;}
 
 table {border-collapse: collapse; width: 100%; color: #fff;}

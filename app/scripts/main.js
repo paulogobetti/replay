@@ -5,7 +5,7 @@ const listLibrary = ( ) => {
     .then(res => res.json())
     .then(data => {
         let tbody = document.getElementById('tbody')
-        tbody.innerText = ''
+        // tbody.innerText = ''
         data.forEach(i => {
             let musicLineItem = document.createElement('tr')
             musicLineItem.classList.add('music-card-line')
@@ -85,7 +85,6 @@ const listLibrary = ( ) => {
         })
     })
 }
-listLibrary( )
 
 const listPlaylists = ( ) => {
     fetch('app/data/playlist.json')
@@ -170,7 +169,7 @@ const playMusicFromList = (music) => {
 const switchImageBg = (imgUrl) => {
     let imageClass = 'url("' + imgUrl + '")'
 
-    let contentDisplay = document.getElementById('content-display')
+    let contentDisplay = document.getElementById('content')
 
     let imageBg = document.getElementById('background-image')
 
@@ -229,7 +228,7 @@ span[1].onclick = ( ) => {
 }
 
 window.onclick = (event) => {
-    console.log('Click')
+    console.log('Clicou no main.js')
     if(event.target == modal[0] || event.target == modal[1]) {
         modal[0].style.display = "none";
         modal[1].style.display = "none";

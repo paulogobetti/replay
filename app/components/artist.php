@@ -1,0 +1,1 @@
+<h1>ARTIST PAGE</h1>

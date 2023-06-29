@@ -113,11 +113,20 @@
     }
 
     function purgeCache() {
+        // Testar abordagem abaixo futuramente e fazer um benchmark pra saber qual melhor.
+        // Levar em consideração a compatibilidade entre os navegadores e se o 'no-cache' do cabeçalho seta para não ter cache de forma persistente após a execução (ruim).
+        // A abordagem abaixo altera o timestamp de modificação dos arquivos, fazendo o navegador e o servidor notarem a alteração e atualizar.
+        // touch('/www/control/file1.js');
+        // touch('/www/control/file2.js');
+        // touch('/www/control/file2.js');
+
         header("Cache-Control: no-cache, no-store, must-revalidate");
+
+        clearstatcache();
 
         echo '<script src="../app/data/library.json"></script>';
 
-        header('location: /');
+        // header('location: /');
     }
 
     function main() {
