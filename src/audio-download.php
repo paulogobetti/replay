@@ -29,8 +29,26 @@
         $command = $ytDownloaderAlias . ' --no-playlist --cache-dir ' . $cacheDir . ' --no-check-certificate --no-continue --get-filename -o "%(artist)s#%(track)s#%(album)s#%(release_year)s#%(duration)s" ' . $musicURL . ' 2>&1';
 
         $getMeta = explode('#', trim(shell_exec($command)));
+        $artists = explode(',', $getMeta[0]);
 
-        return $getMeta;
+        $music = new stdClass;
+        $music->id = uniqid();
+        $music->artist = $artists[0];
+        $music->track = $getMeta[1];
+        $music->album = $getMeta[2];
+        $music->release = $getMeta[3];
+        $music->duration = $getMeta[4];
+
+        $fileNameString = $music->artist . '_' . $music->track . '_' . $music->release;
+        $insertUnderscore = str_replace(' ', '_', $fileNameString);
+        $fileName = str_replace(array(' ', "\t", "\n", '(', ')', '.', '/'), '', $insertUnderscore);
+
+        $music->src = 'app/media/' . $fileName . '.mp3';
+        $music->thumbnail = 'app/media/' . $fileName . '.png';
+
+        $music->file_name = $fileName;
+
+        return $music;
     }
 
     function getFiles() {
@@ -50,6 +68,7 @@
         global $ffmpegAlias;
         global $ytDownloaderAlias;
         global $cacheDir;
+        global $fileType;
 
         $getThumbnailURL = $ytDownloaderAlias . ' --no-playlist --cache-dir ' . $cacheDir . ' --no-check-certificate --no-continue --get-thumbnail ' . $musicURL;
         $explode = explode('.', shell_exec($getThumbnailURL));
@@ -61,42 +80,40 @@
 
         shell_exec($crop);
         shell_exec($insert);
+    }
 
-        // renomear a imagem
+    function postProcessing($music) {
+        global $ffmpegAlias;
 
-        // clearFiles($fileType);
+        $command = $ffmpegAlias . ' -i "../app/media/final.mp3" -metadata title="'.$music->track.'" -metadata artist="'.$music->artist.'" -metadata album="'.$music->album.'" -metadata date="'.$music->release.'" -c copy "../app/media/'.$music->file_name.'.mp3"';
+
+        shell_exec($command);
+
+        renameThumbnail($music->file_name);
+    }
+
+    function renameThumbnail($fileName) {
+        $command = 'mv "../app/media/cover.png" "../app/media/'.$fileName.'.png"';
+
+        shell_exec($command);
     }
 
     function clearFiles() {
-        $command = 'rm "../app/media/temp.mp3"';
-        // $command = 'rm "../app/media/temp.mp3" && rm "../app/media/temp.'.$fileType.'"';
+        global $fileType;
+
+        $command = 'rm "../app/media/temp.mp3" "../app/media/final.mp3" "../app/media//temp.'.$fileType.'"';
 
         shell_exec($command);
     }
 
-    function postProcessing($musicInfo) {
-        global $ffmpegAlias;
+    function addMusicToData($music) {
+        $data = file_get_contents("../app/data/library.json");
+        $json = json_decode($data, true);
+        array_push($json, $music);
 
-        $artist = explode(',', $musicInfo[0]);
-        $track = $musicInfo[1];
-        $album = $musicInfo[2];
-        $release = $musicInfo[3];
-        $duration = $musicInfo[4];
-
-        $fileNameString = $artist[0] . '_' . $track . '_' . $release;
-        $fileName = str_replace(array(' ', "\t", "\n"), '', $fileNameString);
-
-        $command = $ffmpegAlias . ' -i "../app/media/final.mp3" -metadata title="'.$track.'" -metadata artist="'.$artist[0].'" -metadata album="'.$album.'" -metadata date="'.$release.'" -c copy "../app/media/'.$fileName.'.mp3"';
-
-        shell_exec($command);
-
-        echo '<pre>';
-        var_dump($artist[0], $track, $album, $release, $duration);
-        echo '</pre>';
-    }
-
-    function addMusicToData() {
-        //
+        $handle = fopen('../app/data/library.json', 'w');
+        fwrite($handle, json_encode($json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_QUOT));
+        fclose($handle);
     }
 
     function checkSucess() {
@@ -112,128 +129,15 @@
 
         if(!$musicURL) { header('location: /'); }
 
-        $musicInfo = getMeta();
+        $music = getMeta();
 
         getFiles();
 
-        postProcessing($musicInfo);
+        postProcessing($music);
 
-        // print_r($musicInfo);
+        clearFiles();
+
+        addMusicToData($music);
     }
 
     main();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // $getFileCommand = 'python3 ./includes/youtube-dl --no-playlist --cache-dir .cache --no-check-certificate --no-continue -x --audio-format mp3 --audio-quality 320K --add-metadata --embed-thumbnail --write-thumbnail --ffmpeg-location ./includes/ffmpeg-*/ffmpeg -o "../app/media/%(artist)s - %(track)s - %(album)s - %(release_year)s.%(ext)s" ' . $url . ' 2>&1';
-    // echo "<pre>$getFileCommand</pre>";
-    // $getFile = shell_exec($getFileCommand);
-    // echo "<pre>$getFile</pre>";
-
-    // $getMusicInfoCommand = 'python3 ./includes/youtube-dl --no-playlist --cache-dir .cache --no-check-certificate --get-filename ' . $url . ' -o "%(track)s#%(artist)s#%(album)s#%(release_year)s#%(duration)s" 2>&1';
-    // $getFileNameCommand  = 'python3 ./includes/youtube-dl --no-playlist --cache-dir .cache --no-check-certificate --get-filename ' . $url . ' -o "%(artist)s - %(track)s - %(album)s - %(release_year)s" 2>&1';
-
-    // $getMusicInfo = shell_exec($getMusicInfoCommand);
-    // $getFileName = shell_exec($getFileNameCommand);
-
-    // $fileName = trim($getFileName);
-    // $musicInfo = explode('#', $getMusicInfo);
-
-    // $track = ucwords(strtolower($musicInfo[0]));
-    // $artist = ucwords(strtolower($musicInfo[1]));
-    // $mainArtist = explode(',', $artist);
-
-    // $album = ucwords(strtolower($musicInfo[2]));
-    // $releaseYear = $musicInfo[3];
-    // $duration = $musicInfo[4];
-
-    // $musicFile = new stdClass;
-    // $musicFile->track_id = uniqid();
-    // $musicFile->name = $track;
-    // $musicFile->artist = $mainArtist[0];
-    // $musicFile->album = $album;
-    // $musicFile->realease = $releaseYear;
-    // $musicFile->src = 'app/media/' . $fileName . '.mp3';
-    // $musicFile->thumbnail = 'app/media/' . $fileName . '.jpg';
-    // $musicFile->duration = $duration;
-
-    // $data = file_get_contents("../app/data/library.json");
-    // $json = json_decode($data, true);
-    // array_push($json, $musicFile);
-
-    // $handle = fopen('../app/data/library.json', 'w');
-    // fwrite($handle, json_encode($json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_QUOT));
-    // fclose($handle);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            // print_r($musicInfo);
-
-        // echo $callback;
-
-
-        // return $callback('Teste');
-
-
-
-
-
-        // var_dump($getMeta);
-        // print_r($getMeta);
-        // echo "Hello";
-        // $getMeta = explode('#', trim(shell_exec($command)));
-        // $novo = explode(',', $getMeta);
-        // $musicInfo[1] = explode(',', $getMeta);
-        // $getMeta = trim(shell_exec($command));
-        // $musicInfo = explode('#', $getMeta);
-        // $musicInfo[1] = explode(',', $getMeta);
-
-
-
-
-
-
-                // if(!$musicURL && !$thumbnail) {
-        //     header('location: /');
-        // } else {
-        //     print_r($thumbnail);
-        // }

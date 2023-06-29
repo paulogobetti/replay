@@ -45,9 +45,9 @@ const listLibrary = ( ) => {
 
             buttonLink = document.createElement('a')
             let addToPlaylistButton = document.createElement('button')
-            addToPlaylistButton.innerHTML = i.track_id
+            addToPlaylistButton.innerHTML = i.id
             addToPlaylistButton.classList.add('modal-button')
-            let trackID = i.track_id
+            let trackID = i.id
             addToPlaylistButton.setAttribute('onclick', 'showModal("' + trackID + '")')
 
             buttonLink.append(addToPlaylistButton)
@@ -55,7 +55,7 @@ const listLibrary = ( ) => {
             musicLineItem.append(addToPlaylistCol)
 
             let musicTitle = document.createElement('h3')
-            musicTitle.innerHTML = i.name
+            musicTitle.innerHTML = i.track
             trackNameCol.append(musicTitle)
             musicLineItem.append(trackNameCol)
 
@@ -79,7 +79,7 @@ const listLibrary = ( ) => {
             musicLineItem.append(durationCol)
 
             let release = document.createElement('h3')
-            release.innerHTML = i.realease
+            release.innerHTML = i.release
             releaseCol.append(release)
             musicLineItem.append(releaseCol)
         })
@@ -158,7 +158,7 @@ const playMusicFromList = (music) => {
 
     switchImageBg(imgUrl)
 
-    titleDisplay.innerHTML = '<h4>' + music.artist + ' - ' + music.name + '<h4>'
+    titleDisplay.innerHTML = '<h4>' + music.artist + ' - ' + music.track + '<h4>'
 
     playButton.style.display = 'none'
     pauseButton.style.display = 'inline'
@@ -212,7 +212,6 @@ range.onchange = ( ) => {
 }
 
 // Modals
-
 let modal = document.getElementsByClassName('modal');
 let button = document.getElementsByClassName("modal-button"); // MyBtn
 let span = document.getElementsByClassName("close");
@@ -243,24 +242,3 @@ const showModal = (id) => {
 
     modal[1].style.display = "block";
 }
-
-/*
-
-    playPlaylist(id) {
-
-    }
-    validateUrl(input) {
-        Validar input e só chamar o script caso esteja correto.
-    }
-    searchMusic( ) {
-        Request AJAX.
-        Verificar se é possível em um JSON local.
-    }
-    playlistStream(generic) {
-        Ao invés de reproduzir a faixa escolhida diretamente, enviar a faixa para uma playlist genérica (que será apagada e reescrita sempre que o usuário der um novo play) e com isso, entra uma nova opção de add a fila, que é um objeto apenas na memória.
-    }
-    addToRow(id) {
-        Enfilera música desejada na genericPlaylist.
-    }
-
-*/
