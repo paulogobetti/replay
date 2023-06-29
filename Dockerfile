@@ -6,6 +6,6 @@ COPY . /var/www/html
 
 WORKDIR /var/www/html
 
-VOLUME /home/$USER/.workspace/replay
+#VOLUME /home/$USER/.workspace/replay
 
 #RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
