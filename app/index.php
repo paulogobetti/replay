@@ -110,10 +110,12 @@
         <!-- MODAL CONTENT -->
         <div class="modal-content">
             <span class="close">×</span>
-            <form action="../src/new-playlist.php" method="POST">
+            <input type="text" name="playlist-name" value="Playlist Name" id="playlist-name">
+            <a href="#" onclick="newPlaylistHook(document.getElementById('playlist-name').value)">NOVA PLAYLIST</a>
+            <!-- <form action="../src/new-playlist.php" method="POST">
                 <input type="text" name="playlist-name" value="Playlist Name">
                 <a href="" id="save-playlist-button"><button>Save Playlist</button></a>
-            </form>
+            </form> -->
         </div>
     </div>
 
@@ -128,6 +130,8 @@
     </div>
 
     <script src="app/scripts/main.js"></script>
+    <script src="app/scripts/hooks.js"></script>
+
 </div>
 </body>
 </html>

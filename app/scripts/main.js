@@ -5,11 +5,9 @@ const listLibrary = ( ) => {
     .then(res => res.json())
     .then(data => {
         let tbody = document.getElementById('tbody')
-        // tbody.innerText = ''
         data.forEach(i => {
             let musicLineItem = document.createElement('tr')
             musicLineItem.classList.add('music-card-line')
-
             let thumbnailCol = document.createElement('td')
             thumbnailCol.classList.add('music-thumbnail-col')
             let playButtonCol = document.createElement('td')
@@ -114,7 +112,13 @@ const listPlaylistsModal = (id) => {
             let playlistLinkModal = document.createElement('a')
             let playlistLinkModalTitle = document.createElement('h3')
 
-            playlistLinkModal.href = '../src/add-to-playlist.php/?playlist=' + playlist.playlist_id + '&music=' + id
+            // playlistLinkModal.href = '../src/add-to-playlist.php/?playlist=' + playlist.playlist_id + '&music=' + id
+            playlistLinkModal.href = '#'
+            playlistLinkModal.setAttribute('onclick', 'addToPlaylistHook("'+id+'", "'+playlist.playlist_id+'")')
+            // buttonLink.addEventListener('click', event => {
+            //     addToPlaylistHook(id, playlist.playlist_id)
+            // })
+            // playlistLinkModal.onclick =
             playlistLinkModalTitle.innerHTML = playlist.playlist_name
 
             playlistLinkModal.append(playlistLinkModalTitle)

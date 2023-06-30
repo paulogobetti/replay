@@ -15,17 +15,17 @@
     -o                          Setar arquivo e diretório de saída.
 */
 
-    $musicURL = $_POST['url'];
+    $musicURL = $_GET['url'];
 
-    const YOUTUBEDL = 'python3 ./includes/youtube-dl';
-    const FFMPEG = './includes/ffmpeg-*/ffmpeg';
-    const CACHE_DIR = './.cache';
-    const MEDIA_DIR = '../app/media/';
+    const YOUTUBE_DL = 'python3 ./includes/youtube-dl';
+    const FFMPEG     = './includes/ffmpeg-*/ffmpeg';
+    const CACHE_DIR  = './.cache';
+    const MEDIA_DIR  = '../app/media/';
 
     function getMeta() {
         global $musicURL;
 
-        $command = YOUTUBEDL . ' --no-playlist --cache-dir ' . CACHE_DIR . ' --no-check-certificate --no-continue --get-filename -o "%(artist)s#%(track)s#%(album)s#%(release_year)s#%(duration)s" ' . $musicURL . ' 2>&1';
+        $command = YOUTUBE_DL . ' --no-playlist --cache-dir ' . CACHE_DIR . ' --no-check-certificate --no-continue --get-filename -o "%(artist)s#%(track)s#%(album)s#%(release_year)s#%(duration)s" ' . $musicURL . ' 2>&1';
 
         $getMeta = explode('#', trim(shell_exec($command)));
         $artists = explode(',', $getMeta[0]);
@@ -53,7 +53,7 @@
     function getFiles() {
         global $musicURL;
 
-        $command = YOUTUBEDL . ' --no-playlist --cache-dir ' . CACHE_DIR . ' --no-check-certificate --no-continue -x --audio-format mp3 --audio-quality 320K --write-thumbnail --ffmpeg-location ' . FFMPEG . ' -o "' . MEDIA_DIR . 'temp.%(ext)s" ' . $musicURL . ' 2>&1';
+        $command = YOUTUBE_DL . ' --no-playlist --cache-dir ' . CACHE_DIR . ' --no-check-certificate --no-continue -x --audio-format mp3 --audio-quality 320K --write-thumbnail --ffmpeg-location ' . FFMPEG . ' -o "' . MEDIA_DIR . 'temp.%(ext)s" ' . $musicURL . ' 2>&1';
 
         shell_exec($command);
 
@@ -64,7 +64,7 @@
         global $musicURL;
         global $fileType;
 
-        $getThumbnailURL = YOUTUBEDL . ' --no-playlist --cache-dir ' . CACHE_DIR . ' --no-check-certificate --no-continue --get-thumbnail ' . $musicURL;
+        $getThumbnailURL = YOUTUBE_DL . ' --no-playlist --cache-dir ' . CACHE_DIR . ' --no-check-certificate --no-continue --get-thumbnail ' . $musicURL;
         $explode = explode('.', shell_exec($getThumbnailURL));
         $getFileType = trim($explode[3]);
         $fileType = $getFileType;
@@ -124,7 +124,9 @@
 
         clearstatcache();
 
-        echo '<script src="../app/data/library.json"></script>';
+        // var_dump(shell_exec('pwd'));
+
+        // echo '<script src="../app/data/library.json"></script>';
 
         // header('location: /');
     }
@@ -132,7 +134,7 @@
     function main() {
         global $musicURL;
 
-        if(!$musicURL) { header('location: /'); }
+        // if(!$musicURL) { header('location: /'); }
 
         $music = getMeta();
 
@@ -144,7 +146,7 @@
 
         addMusicToData($music);
 
-        purgeCache();
+        // purgeCache();
     }
 
     main();

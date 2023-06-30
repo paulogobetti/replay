@@ -1,7 +1,14 @@
-<form action="../src/update.php" method="POST">
-    <input type="submit" value="Download/Update Dependencies">
-</form>
-<form action="../src/audio-download.php" method="POST">
-    <input type="text" name="url" id="">
-    <input type="submit" value="Download Music">
-</form>
+<a href="#" onclick="httpRequest('../../src/update.php')">
+    <button>
+        Download Core
+    </button>
+</a>
+
+<br><br>
+
+<input type="text" name="music-input" id="music-input">
+<a href="#" onclick="downloadAudioHook(document.getElementById('music-input').value)">
+    <button>
+        Download Music
+    </button>
+</a>

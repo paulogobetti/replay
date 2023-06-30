@@ -2,34 +2,29 @@
 <img width="150" src="app/img/replay-logo-favicon.svg"></p>
 <h1 align="center">RePlay</h1>
 <p align="center">Web Music Player with GUI for youtube-dl command-line.<p>
-  
-<br>
 
 ><div align="center">⚠️
 ><div align="center">Attention: This project is under development.
 
-<br>
-
-- DESCRIPTION
-- REQUIREMENTS
-- HOW TO USE
-- DEV
-- COPYRIGHT
-- SCREENSHOTS
-
-
+- [DESCRIPTION](#description) 
+- [REQUIREMENTS](#requirements)
+- [HOW TO USE](#how-to-use)
+- [DEV](#dev)
+- [COPYRIGHT](#copyright)
+- [SCREENSHOTS](#screenshots)
 
 <hr>
 
-<h4>D E S C R I P T I O N</h4>
+# DESCRIPTION
 Replay is a Web App created to manage your personal music library, integrated with the youtube-dl command-line app. It is released to the public domain, which means you can modify it, redistribute it or use it however you like.
-<br><br>
+
 Demo: <a href="https://demo.paulogobetti.com/replay">here</a>.
-<br><br>
+
 ⚠️ Warning: The Downloader feature only works with audio media (Tema, Topic, 'official channels', etc.), which have the appropriate tags that will be extracted from the object. Attempting to download a link that does not have the tags will generate an incorrect JSON object and break the dynamic listing.
+
 <hr>
 
-<h4>R E Q U I R E M E N T S</h4>
+# REQUIREMENTS
 Some dependencies are required both to run the app and its download extension.
 
 |   lib             |   ver
@@ -42,43 +37,55 @@ Some dependencies are required both to run the app and its download extension.
 
 <hr>
 
-<h4>H O W&nbsp&nbsp&nbsp&nbspT O&nbsp&nbsp&nbsp&nbspU S E</h4>
+# HOW TO USE
+Require: **git**, **docker** and **sudo**
+
+```console
+git clone https://github.com/paulogobetti/replay.git /home/$USER/.replay && cd /home/$USER/.replay && docker build -t replay . && docker run -d -p 8383:80 -v /home/$USER/.replay:/var/www/html replay && sudo chown www-data:www-data -R /home/$USER/.replay
+```
+
+<p>
+&nbsp&nbsp&nbspNote: For the app to be able to use shell_exec() and exec() it is necessary to change the ownership of the directory to the same Apache user (www-data) - that's why sudo is necessary.<br>
+&nbsp&nbsp&nbspYou could do the reverse and try changing the Apache user to $USER or putting it in the 'docker' group in Dockerfile, but all functionality is not guaranteed to hold.<br>
+&nbsp&nbsp&nbsp⚠️ Warning: This software is under development and is not recommended for use on an insecure network. If you decide to use it, remember to change the php.ini for production.
+</p>
 
 <hr>
 
-<h4>D E V E L O P M E N T</h4>
+# DEV
 
-Features:
-- [x] Basic front-end.
-- [x] Music data JSON listing.
-- [x] Playlist JSON link listing.
-- [x] Push metatags in music file.
-- [x] Music downloader.
-- [x] Add music metatags in JSON data.
-- [x] Add playlist in JSON data.
-- [x] Player functions.
-- [ ] Equalizer.
-- [ ] API Theme Editor.
-- [ ] Last.fm integration.
-- [ ] Spectogram.
-- [ ] Progress bar.
-- [x] Controls: Play, Pause, Next, Back, Vol.
+Timeline:
+- [x] Basic front-end
+- [x] Music data JSON listing
+- [x] Playlist JSON listing
+- [x] Push metatags in music file
+- [x] Add music from web
+- [ ] Add music from client
+- [x] Add new music in JSON data
+- [x] Add new playlist in JSON data
+- [x] Player wrapper
+- [x] Controls: ~~Play~~, ~~Pause~~, Next, Back, Vol, ~~Progress Bar~~
+- [x] Post-process the audio and thumbnail
+- [x] Add cropped thumbnail in music audio metadata 
+- [x] AJAX nav
+- [ ] Export playlist
+- [ ] Remove playlist
+- [ ] Remove music
+- [ ] Remove music from playlist
+- [ ] Equalizer
+- [ ] Theme Editor
+- [ ] Last.fm integration
+- [ ] Spectogram?
 - [ ] Compressor?
-- [ ] AJAX search (JSON?).
-
-PWA Miniplayer (res <= 512px):
-- [ ] Float nav menu (icons).
-- [ ] Keep icons full time in apk version.
-- [ ] Remove music info from listing.
 
 <hr>
 
-<h4>C O P Y R I G H T</h4>
+# COPYRIGHT
 
 **Replay** is a public domain software and does not support copyrighted content in any way. <br>
 The Downloader feature of this player was developed to be used exclusively with royalty free content, choose correctly what you are going to download and do not incorporate this app in any project that violates copyright!
 
 <hr>
 
-<h4>S C R E E N S H O T S</h4>
+# SCREENSHOTS
 <img src="https://paulogobetti.com/media/replay-screenshot.png">

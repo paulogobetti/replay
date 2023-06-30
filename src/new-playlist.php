@@ -1,8 +1,10 @@
 <?php
 
+$playlistName = $_GET['new'];
+
 $newPlaylist = new stdClass;
 $newPlaylist->playlist_id = uniqid();
-$newPlaylist->playlist_name = $_POST['playlist-name'];
+$newPlaylist->playlist_name = $playlistName;
 $newPlaylist->tracks = [];
 
 $data = file_get_contents("../app/data/playlist.json");
