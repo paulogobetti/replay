@@ -53,7 +53,7 @@
     function getFiles() {
         global $musicURL;
 
-        $command = YOUTUBE_DL . ' --no-playlist --cache-dir ' . CACHE_DIR . ' --no-check-certificate --no-continue -x --audio-format mp3 --audio-quality 320K --write-thumbnail --ffmpeg-location ' . FFMPEG . ' -o "' . MEDIA_DIR . 'temp.%(ext)s" ' . $musicURL . ' 2>&1';
+        $command = YOUTUBE_DL . ' --no-playlist --cache-dir ' . CACHE_DIR . ' --no-check-certificate --no-continue -x --audio-format mp3 --audio-quality 320K --ffmpeg-location ' . FFMPEG . ' -o "' . MEDIA_DIR . 'temp.%(ext)s" ' . $musicURL;
 
         shell_exec($command);
 
@@ -63,11 +63,20 @@
     function cropAndInsertCover() {
         global $musicURL;
         global $fileType;
+        global $thumbnailURL;
 
-        $getThumbnailURL = YOUTUBE_DL . ' --no-playlist --cache-dir ' . CACHE_DIR . ' --no-check-certificate --no-continue --get-thumbnail ' . $musicURL;
-        $explode = explode('.', shell_exec($getThumbnailURL));
-        $getFileType = trim($explode[3]);
-        $fileType = $getFileType;
+        $getThumbnailURL = YOUTUBE_DL . ' --list-thumbnails ' . $musicURL;
+        $exec = exec($getThumbnailURL);
+        $explode = explode('https://', $exec);
+        $explode = explode('?', $explode[1]);
+        $thumbnailURL = $explode[0];
+
+        $explode = explode('.', $thumbnailURL);
+        $fileType = $explode[3];
+
+        $getThumbnail = 'curl -L '.$thumbnailURL.' --output "'.MEDIA_DIR.'/temp.'.$fileType.'"';
+
+        shell_exec($getThumbnail);
 
         $crop   = FFMPEG . ' -i "' . MEDIA_DIR . 'temp.'.$fileType.'" -filter:v "crop=out_w=in_h" "' . MEDIA_DIR . 'cover.png"';
         $insert = FFMPEG . ' -i "' . MEDIA_DIR . 'temp.mp3" -i "'.MEDIA_DIR.'cover.png" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "' . MEDIA_DIR . 'final.mp3"';
@@ -108,17 +117,11 @@
         fclose($handle);
     }
 
-    function checkSucess() {
-        //
-    }
-
     function purgeCache() {
         // Testar abordagem abaixo futuramente e fazer um benchmark pra saber qual melhor.
         // Levar em consideração a compatibilidade entre os navegadores e se o 'no-cache' do cabeçalho seta para não ter cache de forma persistente após a execução (ruim).
         // A abordagem abaixo altera o timestamp de modificação dos arquivos, fazendo o navegador e o servidor notarem a alteração e atualizar.
         // touch('/www/control/file1.js');
-        // touch('/www/control/file2.js');
-        // touch('/www/control/file2.js');
 
         header("Cache-Control: no-cache, no-store, must-revalidate");
 
@@ -126,13 +129,13 @@
 
         // var_dump(shell_exec('pwd'));
 
-        // echo '<script src="../app/data/library.json"></script>';
+        echo '<script src="../app/data/library.json"></script>';
 
         // header('location: /');
     }
 
     function main() {
-        global $musicURL;
+        // global $musicURL;
 
         // if(!$musicURL) { header('location: /'); }
 
@@ -145,6 +148,8 @@
         clearFiles();
 
         addMusicToData($music);
+
+        clearstatcache();
 
         // purgeCache();
     }
