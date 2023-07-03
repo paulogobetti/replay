@@ -1,6 +1,4 @@
-.backup
-
-.old
+.tmp
 app/data
 app/media
 src/.cache

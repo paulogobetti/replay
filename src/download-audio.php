@@ -1,5 +1,7 @@
 <?php
 
+    require 'check-success.php';
+
 /*
     --no-playlist               Ignorar playlists e baixar apenas o vídeo referenciado no link.
     --cache-dir DIR             Setar diretório de cache (youtube-dl).
@@ -127,17 +129,17 @@
 
         clearstatcache();
 
-        // var_dump(shell_exec('pwd'));
-
         echo '<script src="../app/data/library.json"></script>';
-
-        // header('location: /');
     }
 
     function main() {
-        // global $musicURL;
+        global $musicURL;
 
-        // if(!$musicURL) { header('location: /'); }
+        if(strstr($musicURL,"youtube.com") != true) {
+            $message = 'Not a YouTube link.';
+
+            exit($message);
+        }
 
         $music = getMeta();
 
@@ -152,6 +154,8 @@
         clearstatcache();
 
         // purgeCache();
+
+        checkSuccess();
     }
 
     main();

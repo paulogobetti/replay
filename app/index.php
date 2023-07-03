@@ -131,7 +131,6 @@
 
     <script src="app/scripts/main.js"></script>
     <script src="app/scripts/hooks.js"></script>
-
 </div>
 </body>
 </html>

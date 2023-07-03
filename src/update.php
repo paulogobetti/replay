@@ -7,4 +7,4 @@
 
     exec($command);
 
-    // var_dump($output);
+    checkSuccess();

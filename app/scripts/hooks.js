@@ -1,5 +1,5 @@
 const downloadAudioHook = (ytUrl) => {
-    httpRequest('../../src/audio-download.php?url=' + ytUrl)
+    httpRequest('../../src/download-audio.php?url=' + ytUrl)
 }
 
 const newPlaylistHook = (playlistName) => {
